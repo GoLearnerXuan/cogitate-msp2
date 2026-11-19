@@ -864,9 +864,12 @@ for group_configfolder,individual_ana,individual_configfolder in zip(group_confi
                     # Frequency index selection
                     freq_use_index = np.where((freqs >= freq_range[0]) & (freqs <= freq_range[-1]))[0]
 
+                    assert np.allclose(times_use[[cond_tidx_plot[0]-1] + cond_tidx_plot + [cond_tidx_plot[-1]+1]],
+                                       times_load[cond_tidx[0]-1:cond_tidx[-1]+2]), 'detail plot time not aligned'
+                    
                     ax,im = plot_matrix_pcolormesh(
                         flag_sharp_contour= flag_sharp_contour,
-                            plotdata_save_folder_path = plotdata_path_groupmean_pic,
+                            plotdata_save_folder_path = os.path.join(plotdata_path_groupmean_pic, 'detail'),
                             flag_colorbar = 1,
                             flag_return_image= 1,
                             x_coords= times_load[cond_tidx[0]-1:cond_tidx[-1]+2],
@@ -875,8 +878,8 @@ for group_configfolder,individual_ana,individual_configfolder in zip(group_confi
                             # x_end= times_load[cond_tidx[-1]+1], 
                             # y0   = freq_range[0], 
                             # y_end= freq_range[-1],  
-                            data= data_ft[freq_use_index,:][:,[cond_tidx[0]-1] + cond_tidx +[cond_tidx[-1]+1]], 
-                            mask= mask_ft[freq_use_index,:][:,[cond_tidx[0]-1] + cond_tidx +[cond_tidx[-1]+1]], 
+                            data= data_ft[freq_use_index,:][:,[cond_tidx_plot[0]-1] + cond_tidx_plot +[cond_tidx_plot[-1]+1]], 
+                            mask= mask_ft[freq_use_index,:][:,[cond_tidx_plot[0]-1] + cond_tidx_plot +[cond_tidx_plot[-1]+1]], 
                             cmap=cmap, 
                             ax  =None, 
                             ylim=ylim,
